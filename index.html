@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+<title>Currículo Digital Dom Bosco</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500;600;700&family=Blinker:wght@400;700&family=Bodoni+Moda:opsz,wght@6..96,500&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+/* Layout: formulário em cartões à esquerda, prévia da folha A4 à direita (empilha no celular) */
+:root{
+  --bg:#eef3fb; --surface:#ffffff; --ink:#18264a; --muted:#5b6886; --line:#d5deef;
+  --blue:#2a4a9b; --blue-soft:#dbe6fa; --red:#b8434a; --red-soft:#f8e3e4; --ok:#2f7a55; --ok-soft:#ddf1e6;
+  --paper:#ffffff; --paper-ink:#1c2540; --ghost:#9aa6c2;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Figtree", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121a2e; --surface:#1a2440; --ink:#e6ecfa; --muted:#a3b0cf; --line:#2c3a60;
+  --blue:#9cb7f2; --blue-soft:#24345e; --red:#f0a3a8; --red-soft:#432a33; --ok:#8fd6ae; --ok-soft:#1f3a2e;
+  --paper:#f7f9fd; --paper-ink:#1c2540; --ghost:#9aa6c2; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121a2e; --surface:#1a2440; --ink:#e6ecfa; --muted:#a3b0cf; --line:#2c3a60;
+  --blue:#9cb7f2; --blue-soft:#24345e; --red:#f0a3a8; --red-soft:#432a33; --ok:#8fd6ae; --ok-soft:#1f3a2e;
+  --paper:#f7f9fd; --paper-ink:#1c2540; --ghost:#9aa6c2; color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding-block:20px 48px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.top{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--red);font-weight:700}
+h1{font-family:var(--f-display);font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0;text-wrap:balance}
+.lead{color:var(--muted);max-width:62ch;margin:0}
+.grid{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+@media (min-width:960px){.grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.preview-col{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);align-self:start}}
+form{display:flex;flex-direction:column;gap:14px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 16px 18px;display:flex;flex-direction:column;gap:12px}
+.card h2{font-family:var(--f-display);font-size:20px;margin:0;display:flex;align-items:baseline;gap:10px}
+.card h2 .n{font-family:var(--f-body);font-size:13px;font-weight:700;color:var(--blue);background:var(--blue-soft);border-radius:999px;padding:2px 9px}
+.tip{font-size:15px;color:var(--muted);margin:0}
+.tip b{color:var(--ink)}
+label{display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:15px}
+label small{font-weight:400;color:var(--muted)}
+input,textarea,select{font:inherit;font-size:17px;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;width:100%;box-sizing:border-box}
+textarea{min-height:84px;resize:vertical}
+input:focus,textarea:focus,select:focus{outline:3px solid var(--blue-soft);border-color:var(--blue)}
+.two{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+@media (min-width:560px){.two{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.item{border:1.5px dashed var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.item-head{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:700;font-size:15px;color:var(--muted)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid transparent;padding:11px 16px;font-weight:700}
+button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.btn-add{background:transparent;border-color:var(--blue);color:var(--blue);align-self:flex-start}
+.btn-x{background:transparent;color:var(--red);padding:4px 8px;font-size:14px;border-color:var(--red-soft)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--bg);border:1.5px solid var(--line);color:var(--ink);font-weight:600;font-size:15px;padding:8px 12px;border-radius:999px}
+.chip[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:var(--surface)}
+.example{background:var(--red-soft);border-radius:10px;padding:10px 12px;font-size:15px}
+.example p{margin:0}
+.example .from{text-decoration:line-through;color:var(--muted)}
+.actions{position:sticky;bottom:0;z-index:5;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;
+  padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;gap:10px;align-items:center;box-shadow:0 -6px 18px rgba(24,38,74,.08)}
+.btn-main{background:var(--blue);color:var(--surface);flex:1 1 200px}
+.btn-sec{background:var(--blue-soft);color:var(--blue);flex:1 1 160px}
+.btn-ghost{background:transparent;color:var(--muted);border-color:var(--line)}
+.msg{flex-basis:100%;font-size:15px;margin:0}
+.msg.ok{color:var(--ok)} .msg.err{color:var(--red)}
+.confirm{flex-basis:100%;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:15px}
+.confirm .yes{background:var(--red);color:var(--surface)}
+/* prévia: folha de papel */
+.preview-col h2{font-family:var(--f-display);font-size:18px;margin:0 0 8px;color:var(--muted);font-weight:600}
+.sheet-scroll{overflow-x:auto}
+.sheet{background:var(--paper);color:var(--paper-ink);border-radius:6px;box-shadow:0 10px 30px rgba(24,38,74,.18);padding:30px 26px 36px;
+  font-family:"Blinker", var(--f-body);font-size:13px;line-height:1.4;min-height:520px;min-width:300px}
+.cv-name{font-family:"Bodoni Moda", Georgia, serif;font-weight:500;font-size:28px;line-height:1.12;text-align:center;color:#111;margin:0 0 14px;text-wrap:balance}
+.cv-contacts{display:flex;justify-content:space-around;gap:8px;margin-bottom:10px;text-align:center}
+.cv-c{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11.5px;color:#222;min-width:0;overflow-wrap:anywhere}
+.cv-c svg{width:16px;height:16px;stroke:#111;fill:none;stroke-width:1.6}
+.cv-sec{margin-top:12px}
+.cv-label{font-weight:700;font-size:12px;letter-spacing:.02em;text-transform:uppercase;color:#111}
+.cv-rule{height:1px;background:#777;margin:3px 0 8px}
+.cv-body{margin-left:32%}
+.cv-body p{margin:0 0 4px;text-align:justify}
+.cv-it{margin-bottom:8px}
+.cv-t{font-weight:700;display:block;color:#111}
+.cv-d{display:block;font-size:10.5px;color:#333}
+.cv-s{display:block}
+.cv-hab{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px}
+.ghost{color:var(--ghost);font-style:italic}
+.tag{display:inline-block;font-style:normal;font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:#eef1f7;color:#7c88a6;border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+.foot{margin-top:22px;font-size:14px;color:var(--muted)}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">Escola Estadual Dom Bosco · EJA</span>
+    <h1>Monte o seu currículo</h1>
+    <p class="lead">Preencha os campos com calma. A folha ao lado mostra como o currículo vai ficar. Os textos em cinza são apenas exemplos e somem quando você escreve. No final, baixe em PDF para enviar às empresas.</p>
+  </header>
+
+  <div class="grid">
+    <form id="f" autocomplete="on" novalidate>
+      <section class="card" aria-labelledby="t1">
+        <h2 id="t1"><span class="n">1</span>Dados de contato</h2>
+        <p class="tip">Não coloque RG nem CPF. A empresa só precisa saber como falar com você.</p>
+        <label for="nome">Nome completo<input id="nome" name="nome" autocomplete="name" placeholder="Ex.: Maria José da Silva"></label>
+        <div class="two">
+          <label for="telefone">Telefone com WhatsApp<input id="telefone" name="telefone" type="tel" autocomplete="tel" inputmode="tel" placeholder="Ex.: (67) 99999-0000"></label>
+          <label for="email">E-mail <small>(de preferência só com o seu nome)</small><input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="Ex.: mariajose.silva@gmail.com"></label>
+        </div>
+        <div>
+          <label for="cidade">Cidade<input id="cidade" name="cidade" autocomplete="address-level2" placeholder="Ex.: Corumbá – MS"></label>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="t2b">
+        <h2 id="t2b"><span class="n">2</span>Resumo profissional</h2>
+        <p class="tip">Três ou quatro linhas contando <b>quem você é</b>, a sua experiência e as suas qualidades. Escreva sem “eu”, começando por “Profissional com experiência em...”. É a primeira coisa que o recrutador lê depois do seu nome.</p>
+        <label for="resumo">Resumo profissional<textarea id="resumo" name="resumo" placeholder="Ex.: Profissional com experiência em vendas e atendimento ao cliente, atuando por conta própria desde 2019. Responsável, pontual e com facilidade para lidar com pessoas. Cursando o Ensino Médio na EJA, em busca de oportunidade para crescer na área administrativa."></textarea></label>
+      </section>
+
+      <section class="card" aria-labelledby="t2">
+        <h2 id="t2"><span class="n">3</span>Objetivo</h2>
+        <p class="tip">Uma frase curta com a vaga ou a área em que você quer trabalhar.</p>
+        <label for="objetivo">Objetivo<input id="objetivo" name="objetivo" placeholder="Ex.: Vaga de atendente ou auxiliar administrativo"></label>
+      </section>
+
+      <section class="card" aria-labelledby="t3">
+        <h2 id="t3"><span class="n">4</span>Formação</h2>
+        <p class="tip"><b>Estudar na EJA conta, sim.</b> Escreva o curso, a escola e se está em andamento ou concluído.</p>
+        <div id="formacao" class="list"></div>
+        <button type="button" class="btn-add" data-add="formacao">+ Adicionar formação</button>
+      </section>
+
+      <section class="card" aria-labelledby="t4">
+        <h2 id="t4"><span class="n">5</span>Experiência</h2>
+        <p class="tip">Vale trabalho com carteira assinada, por conta própria, bicos e trabalho voluntário. Comece pelo mais recente.</p>
+        <div class="example">
+          <p><span class="from">Vendo bolo</span> → <b>Vendas por conta própria, atendimento ao cliente e controle de pedidos</b></p>
+        </div>
+        <div id="experiencia" class="list"></div>
+        <button type="button" class="btn-add" data-add="experiencia">+ Adicionar experiência</button>
+      </section>
+
+      <section class="card" aria-labelledby="t5">
+        <h2 id="t5"><span class="n">6</span>Cursos</h2>
+        <p class="tip">Cursos livres, técnicos ou on-line, como os do Senac, Sebrae ou do celular. Se ainda não fez nenhum, pode deixar em branco.</p>
+        <div id="cursos" class="list"></div>
+        <button type="button" class="btn-add" data-add="cursos">+ Adicionar curso</button>
+      </section>
+
+      <section class="card" aria-labelledby="t6">
+        <h2 id="t6"><span class="n">7</span>Habilidades</h2>
+        <p class="tip">Toque nas que combinam com você. Se faltar alguma, escreva no campo abaixo.</p>
+        <div class="chips" id="chips" role="group" aria-label="Habilidades sugeridas"></div>
+        <label for="outrasHab">Outras habilidades <small>(separe por vírgula)</small><input id="outrasHab" name="outrasHab" placeholder="Ex.: Costura, Cozinha, Cuidados com idosos"></label>
+      </section>
+
+      <div class="actions" id="actions">
+        <button type="button" class="btn-main" id="btnPdf" hidden>Baixar em PDF</button>
+        <button type="button" class="btn-sec" id="btnCopy">Copiar o texto</button>
+        <button type="button" class="btn-ghost" id="btnClear">Apagar tudo</button>
+        <div class="confirm" id="confirmBox" hidden>
+          <span>Apagar todos os campos?</span>
+          <button type="button" class="yes" id="clearYes">Sim, apagar</button>
+          <button type="button" class="btn-ghost" id="clearNo">Cancelar</button>
+        </div>
+        <p class="msg" id="msg" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+
+    <aside class="preview-col" aria-label="Prévia do currículo">
+      <h2>Prévia do currículo</h2>
+      <div class="sheet-scroll"><div class="sheet" id="sheet"></div></div>
+      <p class="foot">O que você digita fica guardado só neste celular ou computador, para não se perder se a página fechar. Nada é enviado para a escola nem para ninguém.</p>
+    </aside>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  const KEY = "curriculo-dom-bosco-v1";
+  const SUGESTOES = ["Atendimento ao cliente","Vendas","Organização","Pontualidade","Trabalho em equipe",
+    "Comunicação","Controle de caixa","Uso do computador","Uso do celular e WhatsApp","Limpeza e conservação",
+    "Cozinha","Responsabilidade","Facilidade para aprender","Liderança"];
+  const MODELOS = {
+    formacao: {campos:[["curso","Curso","Ex.: Ensino Médio – EJA"],["escola","Escola","Ex.: Escola Estadual Dom Bosco"],["situacao","Situação","Ex.: Em andamento (conclusão em 2027)"]], titulo:"Formação"},
+    experiencia: {campos:[["funcao","Função ou atividade","Ex.: Vendedora autônoma"],["local","Empresa ou local","Ex.: Por conta própria"],["periodo","Período","Ex.: 2019 até hoje"],["atividades","O que você fazia","Ex.: Vendas, atendimento ao cliente e controle de pedidos",true]], titulo:"Experiência"},
+    cursos: {campos:[["nome","Nome do curso","Ex.: Atendimento ao Cliente"],["instituicao","Onde fez","Ex.: Senac Corumbá"],["ano","Ano ou carga horária","Ex.: 2025 – 40 horas"]], titulo:"Curso"}
+  };
+  const vazio = () => ({nome:"",telefone:"",email:"",cidade:"",objetivo:"",resumo:"",
+    formacao:[{curso:"",escola:"",situacao:""}], experiencia:[{funcao:"",local:"",periodo:"",atividades:""}],
+    cursos:[{nome:"",instituicao:"",ano:""}], habilidades:[], outrasHab:""});
+
+  let S = vazio();
+  try { const raw = localStorage.getItem(KEY); if (raw) { const d = JSON.parse(raw); if (d && typeof d === "object") S = Object.assign(vazio(), d); } } catch(e) {}
+  function salvar(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
+
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const SIMPLES = ["nome","telefone","email","cidade","objetivo","resumo","outrasHab"];
+
+  SIMPLES.forEach(k => { const el = $(k); el.value = S[k] || ""; el.addEventListener("input", () => { S[k] = el.value; salvar(); render(); }); });
+
+  function listas(){
+    Object.keys(MODELOS).forEach(tipo => {
+      const box = $(tipo); box.innerHTML = "";
+      S[tipo].forEach((it, i) => {
+        const m = MODELOS[tipo];
+        const div = document.createElement("div"); div.className = "item";
+        let html = '<div class="item-head"><span>' + m.titulo + ' ' + (i+1) + '</span>' +
+          (S[tipo].length > 1 ? '<button type="button" class="btn-x" data-del="'+tipo+'" data-i="'+i+'">Remover</button>' : '') + '</div>';
+        m.campos.forEach(([c, rot, ph, area]) => {
+          const id = tipo + "-" + i + "-" + c;
+          html += '<label for="'+id+'">'+rot+ (area ? '<textarea id="'+id+'" data-t="'+tipo+'" data-i="'+i+'" data-c="'+c+'" placeholder="'+esc(ph)+'">'+esc(it[c]||"")+'</textarea>'
+                                       : '<input id="'+id+'" data-t="'+tipo+'" data-i="'+i+'" data-c="'+c+'" placeholder="'+esc(ph)+'" value="'+esc(it[c]||"")+'">') + '</label>';
+        });
+        div.innerHTML = html; box.appendChild(div);
+      });
+    });
+  }
+  document.addEventListener("input", e => {
+    const t = e.target.dataset && e.target.dataset.t; if (!t) return;
+    S[t][+e.target.dataset.i][e.target.dataset.c] = e.target.value; salvar(); render();
+  });
+  document.addEventListener("click", e => {
+    const add = e.target.closest("[data-add]"), del = e.target.closest("[data-del]");
+    if (add) { const t = add.dataset.add; const novo = {}; MODELOS[t].campos.forEach(([c]) => novo[c] = ""); S[t].push(novo); salvar(); listas(); render();
+      const last = $(t).lastElementChild; if (last) { const f = last.querySelector("input,textarea"); if (f) f.focus(); } }
+    if (del) { const t = del.dataset.del; S[t].splice(+del.dataset.i, 1); salvar(); listas(); render(); }
+  });
+
+  function chips(){
+    const box = $("chips"); box.innerHTML = "";
+    SUGESTOES.forEach(h => {
+      const b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = h;
+      b.setAttribute("aria-pressed", S.habilidades.includes(h) ? "true" : "false");
+      b.addEventListener("click", () => { const i = S.habilidades.indexOf(h); if (i >= 0) S.habilidades.splice(i,1); else S.habilidades.push(h);
+        b.setAttribute("aria-pressed", i >= 0 ? "false" : "true"); salvar(); render(); });
+      box.appendChild(b);
+    });
+  }
+
+  const cheio = o => Object.values(o).some(v => String(v).trim());
+  function habilidadesTodas(){
+    const outras = (S.outrasHab || "").split(",").map(s => s.trim()).filter(Boolean);
+    return S.habilidades.concat(outras);
+  }
+  function g(txt){ return '<span class="ghost">' + esc(txt) + '</span>'; }
+
+  const ICONES = {
+    fone: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10.5 18.5h3"/></svg>',
+    mail: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="1"/><path d="M3.5 6l8.5 7 8.5-7"/></svg>',
+    pin:  '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.5s-6.5-6.6-6.5-11.5a6.5 6.5 0 0 1 13 0c0 4.9-6.5 11.5-6.5 11.5z"/><circle cx="12" cy="10" r="2.2"/></svg>'
+  };
+  function render(){
+    const ex = '<span class="tag">exemplo</span>';
+    const sec = (rot, corpo) => '<div class="cv-sec"><div class="cv-label">'+rot+'</div><div class="cv-rule"></div><div class="cv-body">'+corpo+'</div></div>';
+    const item = (t, d, sub, txt) => '<div class="cv-it">' + (t ? '<span class="cv-t">'+esc(t)+'</span>' : '') + (d ? '<span class="cv-d">'+esc(d)+'</span>' : '') +
+      (sub ? '<span class="cv-s">'+esc(sub)+'</span>' : '') + (txt ? '<p>'+esc(txt)+'</p>' : '') + '</div>';
+    let h = '';
+    h += '<p class="cv-name">' + (S.nome.trim() ? esc(S.nome) : g("Maria José da Silva") + ex) + '</p>';
+    const cts = [[S.telefone,"fone","(67) 99999-0000"],[S.email,"mail","mariajose.silva@gmail.com"],[S.cidade,"pin","Corumbá – MS"]];
+    const algum = cts.some(c => c[0].trim());
+    h += '<div class="cv-contacts">' + cts.filter(c => !algum || c[0].trim()).map(c => '<div class="cv-c">'+ICONES[c[1]]+'<span>'+(algum ? esc(c[0]) : g(c[2]))+'</span></div>').join("") + '</div>';
+
+    h += sec("Resumo profissional", '<p>' + (S.resumo.trim() ? esc(S.resumo) : g("Profissional com experiência em vendas e atendimento ao cliente, atuando por conta própria desde 2019. Responsável, pontual e com facilidade para lidar com pessoas. Cursando o Ensino Médio na EJA, em busca de oportunidade para crescer na área administrativa.")) + '</p>');
+    h += sec("Objetivo", '<p>' + (S.objetivo.trim() ? esc(S.objetivo) : g("Vaga de atendente ou auxiliar administrativo")) + '</p>');
+
+    const fo = S.formacao.filter(cheio);
+    h += sec("Formação", fo.length ? fo.map(f => item(f.curso, f.situacao, f.escola)).join("")
+      : '<div class="cv-it"><span class="cv-t">'+g("Ensino Médio – EJA")+'</span><span class="cv-d">'+g("Em andamento")+'</span><span class="cv-s">'+g("Escola Estadual Dom Bosco")+'</span></div>');
+
+    const xp = S.experiencia.filter(cheio);
+    h += sec("Experiência", xp.length ? xp.map(x => item(x.funcao, x.periodo, x.local, x.atividades)).join("")
+      : '<div class="cv-it"><span class="cv-t">'+g("Vendedora autônoma")+'</span><span class="cv-d">'+g("2019 – atualmente")+'</span><span class="cv-s">'+g("Por conta própria")+'</span><p>'+g("Vendas, atendimento ao cliente e controle de pedidos.")+'</p></div>');
+
+    const cu = S.cursos.filter(cheio);
+    h += sec("Cursos", cu.length ? cu.map(c => item(c.nome, c.ano, c.instituicao)).join("")
+      : '<div class="cv-it"><span class="cv-t">'+g("Atendimento ao Cliente")+'</span><span class="cv-d">'+g("2025")+'</span><span class="cv-s">'+g("Senac Corumbá")+'</span></div>');
+
+    const hb = habilidadesTodas();
+    h += sec("Habilidades", hb.length ? '<div class="cv-hab">'+hb.map(x => '<span>• '+esc(x)+'</span>').join("")+'</div>'
+      : '<div class="cv-hab"><span>'+g("• Atendimento ao cliente")+'</span><span>'+g("• Organização")+'</span><span>'+g("• Pontualidade")+'</span></div>');
+    $("sheet").innerHTML = h;
+  }
+
+  /* ---------- texto puro (copiar) ---------- */
+  function textoPuro(){
+    const L = [];
+    L.push(S.nome.trim().toUpperCase());
+    const contato = [S.telefone, S.email, S.cidade].map(s => s.trim()).filter(Boolean);
+    if (contato.length) L.push(contato.join(" | "));
+    if (S.resumo.trim()) L.push("", "RESUMO PROFISSIONAL", S.resumo.trim());
+    if (S.objetivo.trim()) L.push("", "OBJETIVO", S.objetivo.trim());
+    const fo = S.formacao.filter(cheio); if (fo.length) { L.push("", "FORMAÇÃO"); fo.forEach(f => L.push("- " + [f.curso,f.escola,f.situacao].filter(Boolean).join(" – "))); }
+    const xp = S.experiencia.filter(cheio); if (xp.length) { L.push("", "EXPERIÊNCIA"); xp.forEach(x => { L.push("- " + [x.funcao,x.local,x.periodo].filter(Boolean).join(" – ")); if (x.atividades.trim()) L.push("  " + x.atividades.trim()); }); }
+    const cu = S.cursos.filter(cheio); if (cu.length) { L.push("", "CURSOS"); cu.forEach(c => L.push("- " + [c.nome,c.instituicao,c.ano].filter(Boolean).join(" – "))); }
+    const hb = habilidadesTodas(); if (hb.length) { L.push("", "HABILIDADES", hb.join(", ")); }
+    return L.join("\n");
+  }
+
+  const msg = (t, cls) => { const m = $("msg"); m.textContent = t; m.className = "msg " + (cls || ""); };
+  function faltando(){
+    if (!S.nome.trim()) return "Escreva pelo menos o seu nome completo.";
+    if (!S.telefone.trim() && !S.email.trim()) return "Escreva um telefone ou um e-mail para a empresa falar com você.";
+    return "";
+  }
+
+  $("btnCopy").addEventListener("click", () => {
+    const f = faltando(); if (f) { msg(f, "err"); return; }
+    const txt = textoPuro();
+    const fallback = () => { msg("Não consegui copiar sozinho. Toque e segure no texto da prévia para copiar.", "err"); };
+    try {
+      navigator.clipboard.writeText(txt).then(() => msg("Texto copiado. Agora é só colar no WhatsApp, no e-mail ou no Documentos Google.", "ok"), fallback);
+    } catch(e) { fallback(); }
+  });
+
+  $("btnClear").addEventListener("click", () => { $("confirmBox").hidden = false; });
+  $("clearNo").addEventListener("click", () => { $("confirmBox").hidden = true; });
+  $("clearYes").addEventListener("click", () => {
+    S = vazio(); salvar(); SIMPLES.forEach(k => $(k).value = ""); listas(); chips(); render();
+    $("confirmBox").hidden = true; msg("Tudo apagado. Pode começar de novo.", "ok");
+  });
+
+  /* ---------- PDF (layout em duas colunas) ---------- */
+  const limpa = s => String(s || "").replace(/[–—]/g, "-").replace(/[“”]/g, '"').replace(/[‘’]/g, "'").replace(/[^\x09\x0A\x0D\x20-\x7E -ÿ•]/g, "");
+  const FONTES = { reg: "fontes/Blinker-Regular.ttf", bold: "fontes/Blinker-Bold.ttf", nome: "fontes/BodoniModa-Medium.ttf" };
+  let fontesB64 = null;
+  function paraB64(buf){ const b = new Uint8Array(buf); let s = ""; for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(s); }
+  async function prepararFontes(){
+    if (fontesB64 !== null) return fontesB64;
+    try { const out = {}; for (const k of Object.keys(FONTES)) { const r = await fetch(FONTES[k]); if (!r.ok) throw new Error("fonte"); out[k] = paraB64(await r.arrayBuffer()); } fontesB64 = out; }
+    catch(e) { fontesB64 = false; }
+    return fontesB64;
+  }
+
+  function gerarPdf(fb){
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: "mm", format: "a4" });
+    let FB = "helvetica", FN = "times";
+    if (fb) {
+      doc.addFileToVFS("Blinker-Regular.ttf", fb.reg); doc.addFont("Blinker-Regular.ttf", "Blinker", "normal");
+      doc.addFileToVFS("Blinker-Bold.ttf", fb.bold); doc.addFont("Blinker-Bold.ttf", "Blinker", "bold");
+      doc.addFileToVFS("BodoniModa-Medium.ttf", fb.nome); doc.addFont("BodoniModa-Medium.ttf", "Bodoni", "normal");
+      FB = "Blinker"; FN = "Bodoni";
+    }
+    const T = s => fb ? String(s || "") : limpa(s);
+    const ML = 18, MR = 192, X2 = 72, CW = MR - X2, TOPO = 20, FUNDO = 282;
+    const PRETO = [17,17,17], CINZA = [60,60,60];
+    let y = 22;
+    const mm = pt => pt * 0.3528;
+    const quebra = h => { if (y + h > FUNDO) { doc.addPage(); y = TOPO; } };
+    const fonte = (estilo, tam, cor) => { doc.setFont(FB, estilo); doc.setFontSize(tam); doc.setTextColor(...(cor || PRETO)); };
+
+    // nome centralizado
+    doc.setFont(FN, "normal"); doc.setFontSize(29); doc.setTextColor(...PRETO);
+    const nl = doc.splitTextToSize(T(S.nome.trim()), 165);
+    y += mm(29) * 0.75;
+    nl.forEach(l => { doc.text(l, 105, y, { align: "center" }); y += mm(29) * 1.12; });
+    y += 2;
+
+    // contatos com ícones
+    const cts = [[S.telefone,"fone"],[S.email,"mail"],[S.cidade,"pin"]].filter(c => c[0].trim());
+    if (cts.length) {
+      const colw = (MR - ML) / cts.length;
+      doc.setDrawColor(...PRETO); doc.setFillColor(...PRETO); doc.setLineWidth(0.4);
+      cts.forEach((c, i) => {
+        const cx = ML + colw * (i + 0.5), cy = y + 2.5;
+        if (c[1] === "fone") { doc.roundedRect(cx - 1.6, cy - 2.6, 3.2, 5.2, 0.6, 0.6, "S"); doc.line(cx - 0.5, cy + 1.8, cx + 0.5, cy + 1.8); }
+        if (c[1] === "mail") { doc.rect(cx - 2.7, cy - 1.8, 5.4, 3.7, "S"); doc.lines([[2.7, 2.1], [2.7, -2.1]], cx - 2.7, cy - 1.8, [1,1], "S", false); }
+        if (c[1] === "pin")  { doc.circle(cx, cy - 0.9, 1.7, "S"); doc.lines([[1.45, 3.4], [1.45, -3.4]], cx - 1.45, cy - 0.05, [1,1], "S", false); doc.circle(cx, cy - 0.9, 0.5, "F"); }
+        let tam = 10; fonte("normal", tam, CINZA);
+        while (doc.getTextWidth(T(c[0])) > colw - 3 && tam > 7) { tam -= 0.5; doc.setFontSize(tam); }
+        doc.text(T(c[0].trim()), cx, y + 10, { align: "center" });
+      });
+      y += 14;
+    }
+
+    const secao = rot => {
+      quebra(18); y += 3;
+      fonte("bold", 11); doc.text(T(rot).toUpperCase(), ML, y);
+      y += 2; doc.setDrawColor(110,110,110); doc.setLineWidth(0.3); doc.line(ML, y, MR, y); y += 6;
+    };
+    const texto = (t, estilo, tam, cor, justificar) => {
+      t = T(t).trim(); if (!t) return;
+      fonte(estilo, tam, cor);
+      const lh = mm(tam) * 1.38;
+      t.split(/\n+/).forEach(par => {
+        const linhas = doc.splitTextToSize(par, CW);
+        linhas.forEach((l, k) => {
+          quebra(lh); const base = y + mm(tam) * 0.78;
+          const ultima = k === linhas.length - 1, pal = l.trim().split(/\s+/);
+          if (justificar && !ultima && pal.length > 1) {
+            const larg = pal.reduce((a, w) => a + doc.getTextWidth(w), 0), esp = (CW - larg) / (pal.length - 1);
+            let x = X2; pal.forEach(w => { doc.text(w, x, base); x += doc.getTextWidth(w) + esp; });
+          } else doc.text(l, X2, base);
+          y += lh;
+        });
+      });
+    };
+    const item = (t, d, sub, corpo) => {
+      quebra(14);
+      texto(t, "bold", 10.5); texto(d, "normal", 8.5, CINZA); texto(sub, "normal", 10.5); texto(corpo, "normal", 10.5, PRETO, true);
+      y += 2.5;
+    };
+
+    if (S.resumo.trim()) { secao("Resumo profissional"); texto(S.resumo, "normal", 10.5, PRETO, true); y += 1; }
+    if (S.objetivo.trim()) { secao("Objetivo"); texto(S.objetivo, "normal", 10.5); y += 1; }
+    const fo = S.formacao.filter(cheio); if (fo.length) { secao("Formação"); fo.forEach(f => item(f.curso, f.situacao, f.escola)); }
+    const xp = S.experiencia.filter(cheio); if (xp.length) { secao("Experiência"); xp.forEach(x => item(x.funcao, x.periodo, x.local, x.atividades)); }
+    const cu = S.cursos.filter(cheio); if (cu.length) { secao("Cursos"); cu.forEach(c => item(c.nome, c.ano, c.instituicao)); }
+    const hb = habilidadesTodas();
+    if (hb.length) {
+      secao("Habilidades"); fonte("normal", 10.5);
+      const lh = mm(10.5) * 1.5, meio = CW / 2;
+      for (let i = 0; i < hb.length; i += 2) {
+        quebra(lh);
+        [hb[i], hb[i+1]].forEach((x, k) => { if (!x) return; const l = doc.splitTextToSize("• " + T(x), meio - 3)[0]; doc.text(l, X2 + k * meio, y + mm(10.5) * 0.78); });
+        y += lh;
+      }
+    }
+    return doc.output("blob");
+  }
+  function nomeArquivo(){
+    const base = S.nome.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Za-z0-9 ]/g, "").trim().replace(/\s+/g, "_");
+    return "Curriculo_" + (base || "EJA") + ".pdf";
+  }
+
+  // Funciona em dois lugares: dentro do Claude (capacidade de download) ou num site comum (download direto do navegador).
+  const NO_CLAUDE = !!(window.claude && window.claude.use);
+  let downloads = null;
+  (async () => {
+    if (!NO_CLAUDE) { if (window.jspdf) $("btnPdf").hidden = false; return; }
+    try { downloads = await window.claude.use("downloads"); } catch(e) { downloads = null; }
+    if (downloads && window.jspdf) $("btnPdf").hidden = false;
+  })();
+  function salvarNoNavegador(blob, nome){
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a"); a.href = url; a.download = nome; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+  }
+  $("btnPdf").addEventListener("click", async () => {
+    const f = faltando(); if (f) { msg(f, "err"); return; }
+    if (!window.jspdf || (NO_CLAUDE && !downloads)) { msg("O download não está disponível aqui. Use o botão Copiar o texto.", "err"); return; }
+    msg("Montando o seu currículo...", "");
+    const fb = await prepararFontes();
+    let blob; try { blob = gerarPdf(fb); } catch(e) { msg("Não consegui montar o PDF. Tente de novo ou use Copiar o texto.", "err"); return; }
+    if (!NO_CLAUDE) {
+      try { salvarNoNavegador(blob, nomeArquivo()); msg("Pronto! O seu currículo em PDF foi baixado. Procure na pasta Downloads do celular e envie para as empresas.", "ok"); }
+      catch(e) { msg("Não consegui baixar. Tente de novo ou use Copiar o texto.", "err"); }
+      return;
+    }
+    try { await downloads.save({ filename: nomeArquivo(), data: blob }); msg("Pronto! O seu currículo em PDF foi salvo. Agora é só enviar para as empresas.", "ok"); }
+    catch(e) {
+      const c = e && e.code;
+      if (c === "declined") msg("Download cancelado. Toque em Baixar em PDF quando quiser.", "");
+      else if (c === "rate_limited") msg("Espere alguns segundos e tente de novo.", "err");
+      else { $("btnPdf").hidden = true; msg("O download não está disponível aqui. Use o botão Copiar o texto.", "err"); }
+    }
+  });
+
+  listas(); chips(); render();
+})();
+</script>
+
+</body>
+</html>
